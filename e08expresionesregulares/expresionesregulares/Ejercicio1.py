@@ -21,7 +21,6 @@ import sys
 
 
 def extract_information(archive, type):
-    # Expresiones regulares para cada tipo de información
     regex = {
         'DNI': r'\b\d{8}[A-HJ-NP-TV-Z]\b',
         'IP': r'\b(?:\d{1,3}\.){3}\d{1,3}\b',
@@ -32,12 +31,9 @@ def extract_information(archive, type):
     }
 
     if type in regex:
-        # Leer el archivo
         with open(archive, 'r') as file:
             data = file.read()
-        # Encontrar coincidencias utilizando la expresión regular
         matches = re.findall(regex[type], data)
-        # Mostrar los datos extraídos
         for match in matches:
             print(match)
     else:
@@ -46,7 +42,8 @@ def extract_information(archive, type):
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
-        print("Uso: python programa.py archivo.txt tipo_de_informacion")
+        print("Uso: python programa.py archivo.txt tipo_de_informacion", file=sys.stderr)
+        exit(1)
     else:
         archivo = sys.argv[1]
         tipo = sys.argv[2]
